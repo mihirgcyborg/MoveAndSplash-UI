@@ -9,6 +9,17 @@
     "web": "expo start --web",
     "prepare": "husky"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": ["eslint --fix", "git add"],
+    "*.ts": ["eslint --fix", "git add"],
+    "*.jsx": ["eslint --fix", "git add"],
+    "*.tsx": ["eslint --fix", "git add"]
+  },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5.0.5",
     "expo": "~51.0.28",
@@ -33,6 +44,7 @@
     "@types/react": "~18.2.45",
     "@types/react-test-renderer": "^18.3.0",
     "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "typescript": "^5.6.3"
   },
   "private": true
