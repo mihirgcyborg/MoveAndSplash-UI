@@ -2,6 +2,7 @@
   "expo": {
     "name": "move-splash",
     "scheme": "move-splash",
+    "platform":["ios","android"],
     "slug": "move-splash",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,7 +24,8 @@
     },
     "web": {
       "bundler": "metro",
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "url": "https://move-splash"
     },
     "plugins": [
       "expo-router",

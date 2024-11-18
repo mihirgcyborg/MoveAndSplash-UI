@@ -1,21 +1,18 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
-import { useBottomSheet } from "../../components/BottomSheetProvider";
-import { LogInSignUpContent } from "../../components/auth/LogInSignUpContent";
+import { View } from "react-native";
+
+import { Link, Stack } from "expo-router";
+import ExploreHeader from "../../components/ExploreHeader";
+import Listing from "../../components/Listing";
 
 const Explore = () => {
-  const { openBottomSheet } = useBottomSheet();
-  const { isAuthenticated } = useAuth();
-  useEffect(() => {
-    if (!isAuthenticated) {
-      openBottomSheet(<LogInSignUpContent />, "Log in or sign up", true);
-    }
-  }, [isAuthenticated]);
-
   return (
-    <View>
-      <Text>E</Text>
+    <View className="flex-1">
+      <Stack.Screen
+        options={{
+          header: () => <ExploreHeader />,
+        }}
+      />
+      <Listing />
     </View>
   );
 };

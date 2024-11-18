@@ -24,7 +24,7 @@ const CustomButton = ({
       disabled={isLoading}
     >
       <View
-        className={`bg-secondary rounded-xl min-h-[62px] justify-center items-center ${containerStyles} ${
+        className={`rounded-xl min-h-[62px] justify-center items-center ${containerStyles} ${
           isLoading ? "opacity-50" : ""
         }`}
       >

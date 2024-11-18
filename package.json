@@ -15,18 +15,32 @@
     }
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.ts": ["eslint --fix", "git add"],
-    "*.jsx": ["eslint --fix", "git add"],
-    "*.tsx": ["eslint --fix", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.ts": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.jsx": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.tsx": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5.0.5",
     "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.10",
+    "expo-haptics": "^14.0.0",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.23",
+    "expo-secure-store": "~13.0.2",
     "expo-status-bar": "~1.12.1",
     "nativewind": "^4.1.21",
     "react": "18.2.0",
@@ -35,6 +49,7 @@
     "react-native-reanimated": "~3.10.1",
     "react-native-safe-area-context": "4.10.5",
     "react-native-screens": "3.31.1",
+    "react-native-webview": "13.8.6",
     "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
@@ -42,10 +57,11 @@
     "@tsconfig/react-native": "^3.0.5",
     "@types/jest": "^29.5.14",
     "@types/react": "~18.2.45",
+    "@types/react-native": "^0.73.0",
     "@types/react-test-renderer": "^18.3.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
-    "typescript": "^5.6.3"
+    "typescript": "~5.3.3"
   },
   "private": true
 }

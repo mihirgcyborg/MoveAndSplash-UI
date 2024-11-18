@@ -2,19 +2,16 @@ import { View, Text, Linking } from "react-native";
 import React, { useState } from "react";
 import { SignupFormConfig } from "../../config/formConfig";
 import { useForm } from "../../hooks/useForm";
-import InputFields from "../InputFields";
+import InputFields from "../helper/InputFields";
 import { ScrollView } from "react-native-gesture-handler";
-import CustomButton from "../CustomButton";
+import CustomButton from "../helper/CustomButton";
 
 const SignupForm = () => {
   const configForm = SignupFormConfig;
-  const {
-    formData,
-    handleInputChange,
-    togglePasswordVisibility,
-    errors,
-    setErrors,
-  } = useForm(SignupFormConfig);
+  const { formData, handleInputChange, togglePasswordVisibility, errors } =
+    useForm(SignupFormConfig);
+
+  const handleSubmit = () => {};
 
   return (
     <View className="mx-2">

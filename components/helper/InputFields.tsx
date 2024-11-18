@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 
 import React from "react";
-import { FormConfigProps } from "../config/formConfig";
+import { FormConfigProps } from "../../config/formConfig";
 import { TextInput } from "react-native-gesture-handler";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
@@ -9,7 +9,7 @@ import { TouchableOpacity } from "@gorhom/bottom-sheet";
 interface InputFieldsProps {
   config: Record<string, FormConfigProps>;
   formData: Record<string, string>;
-  handleInputChange: (field: string, value: string) => void;
+  handleInputChange: (sectionKey: string, field: string, value: string) => void;
   togglePasswordVisibility: (sectionKey: string, fieldKey: string) => void;
   errors: Record<string, string | undefined>;
 }
@@ -43,7 +43,7 @@ const InputFields = ({
                         autoCapitalize="none"
                         value={formData[fieldKey]}
                         onChangeText={(value) =>
-                          handleInputChange(fieldKey, value)
+                          handleInputChange(sectionkey, fieldKey, value)
                         }
                         secureTextEntry={isPassword && !config.showPassword}
                         className={` p-2 ${

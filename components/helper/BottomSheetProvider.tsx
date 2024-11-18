@@ -1,4 +1,11 @@
-import { View, Text, LayoutAnimation } from "react-native";
+import {
+  View,
+  Text,
+  LayoutAnimation,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import React, {
   createContext,
   useContext,
@@ -101,9 +108,19 @@ export const BottomSheetProvider = ({
           </View> */}
           {/* Main content */}
 
-          <ScrollView>
-            <View className="flex-1 justify-start mt-10 px-5">{content}</View>
-          </ScrollView>
+          <KeyboardAvoidingView
+            className="flex-1"
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 30 : 0}
+          >
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
+              keyboardShouldPersistTaps="handled"
+              onScrollBeginDrag={() => Keyboard.dismiss()}
+            >
+              <View className="flex-1 justify-start mt-10 px-5">{content}</View>
+            </ScrollView>
+          </KeyboardAvoidingView>
         </BottomSheetView>
       </BottomSheet>
     </BottomSheetContext.Provider>

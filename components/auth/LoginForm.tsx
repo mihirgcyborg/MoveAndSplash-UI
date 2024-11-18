@@ -5,11 +5,11 @@ import {
   SignupFormInitialConfig,
 } from "../../config/formConfig";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
-import CustomButton from "../CustomButton";
-import { useBottomSheet } from "../BottomSheetProvider";
+import CustomButton from "../helper/CustomButton";
+import { useBottomSheet } from "../helper/BottomSheetProvider";
 import SignupForm from "./SignupForm";
 import { useForm } from "../../hooks/useForm";
-import InputFields from "../InputFields";
+import InputFields from "../helper/InputFields";
 const LoginForm = () => {
   const { openBottomSheet } = useBottomSheet();
   const [enableSignUp, setEnableSignUp] = useState(false);
@@ -21,27 +21,15 @@ const LoginForm = () => {
     togglePasswordVisibility,
     errors,
     setErrors,
+    validateAllFields,
   } = useForm(configForm);
 
   const handleSubmit = () => {
-    const newErrors: Record<string, string> = {};
-    Object.keys(configForm).forEach((sectionKey) => {
-      const section = configForm[sectionKey];
-      Object.keys(section.inputFields).forEach((fieldKey) => {
-        const fieldConfig = section.inputFields[fieldKey];
-        console.log(formData[fieldKey]);
-        const error =
-          typeof fieldConfig.validation === "function"
-            ? fieldConfig.validation(formData[fieldKey])
-            : true;
-        if (error !== true) {
-          newErrors[fieldKey] = error;
-        }
-      });
-    });
+    const isValid = validateAllFields();
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (!isValid) {
+      // Errors are already set in `errors` state via `validateAllFields`
+      return;
     } else {
       if (enableSignUp) {
         // const emailExists = await checkEmailExists(formData["email"]);
@@ -92,7 +80,7 @@ const LoginForm = () => {
       <CustomButton
         title="Continue"
         handlePress={handleSubmit}
-        containerStyles="w-full"
+        containerStyles="w-full bg-secondary"
       />
     </>
   );

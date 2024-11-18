@@ -1,11 +1,27 @@
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import { useBottomSheet } from "../../components/helper/BottomSheetProvider";
+import { LogInSignUpContent } from "../../components/auth/LogInSignUpContent";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 
 const TabsLayout = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const { openBottomSheet } = useBottomSheet();
+  const { isAuthenticated, loading } = useAuth();
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      // Wait for loading to complete
+      console.log("User is not authenticated:", isAuthenticated);
+      openBottomSheet(<LogInSignUpContent />, "Log in or sign up", true);
+    }
+  }, [isAuthenticated, loading]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />; // Show a loader while checking
+  }
   return (
     <SafeAreaView className="flex-1 bg-primary">
       <Tabs
@@ -27,7 +43,7 @@ const TabsLayout = () => {
           name="explore"
           options={{
             title: "Explore",
-            headerShown: false,
+            headerShown: true,
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons
                 name={focused ? "search" : "search-outline"}
@@ -94,11 +110,6 @@ const TabsLayout = () => {
           }}
         />
       </Tabs>
-      {/* <LogInSignUpBottomSheet
-          isOpen={isOpen}
-          headerTitle="Log in or sign up"
-          enablePanDown={true}
-        /> */}
 
       <StatusBar backgroundColor="#161622" style="auto" />
     </SafeAreaView>
