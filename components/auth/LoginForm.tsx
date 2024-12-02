@@ -37,7 +37,13 @@ const LoginForm = () => {
         if (!emailExists) {
           // Redirect to the signup completion page
           console.log("Redirecting to signup page for", formData["email"]);
-          openBottomSheet(<SignupForm />, "Finish signing up", false);
+          openBottomSheet(
+            <SignupForm />,
+            "Finish signing up",
+            false,
+            ["91"],
+            true
+          );
         } else {
           setErrors({ email: "Email already exists. Please sign in." });
         }
@@ -48,7 +54,7 @@ const LoginForm = () => {
     }
   };
   return (
-    <>
+    <View className="mt-10">
       <InputFields
         config={configForm}
         formData={formData}
@@ -82,7 +88,7 @@ const LoginForm = () => {
         handlePress={handleSubmit}
         containerStyles="w-full bg-secondary"
       />
-    </>
+    </View>
   );
 };
 

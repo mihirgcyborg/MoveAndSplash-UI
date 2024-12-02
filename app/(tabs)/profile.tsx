@@ -1,10 +1,11 @@
 import { View, Text } from "react-native";
 import React from "react";
+import ListingsBottomSheet from "../../components/ListingsBottomSheet";
 
 const Profile = () => {
   return (
     <View>
-      <Text>Profile</Text>
+      <ListingsBottomSheet listingsdata={[]} category="Tirf" />
     </View>
   );
 };

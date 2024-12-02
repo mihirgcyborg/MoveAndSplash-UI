@@ -13,6 +13,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "permissions": [
+      "ACCESS_FINE_LOCATION",
+      "ACCESS_COARSE_LOCATION"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -23,6 +27,7 @@
       }
     },
     "web": {
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
       "bundler": "metro",
       "favicon": "./assets/favicon.png",
       "url": "https://move-splash"

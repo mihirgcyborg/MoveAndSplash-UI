@@ -19,8 +19,11 @@ const categories = [
   { name: "Gaming Hub", icon: "game-controller" },
   { name: "Ground", icon: "earth" },
 ];
+interface ExploreHeaderProps {
+  onCategoryChanged: (category: string) => void;
+}
 
-const ExploreHeader = () => {
+const ExploreHeader = ({ onCategoryChanged }: ExploreHeaderProps) => {
   const scrollRef = useRef<ScrollView>(null);
   const itemsRef = useRef<Array<View | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,6 +35,7 @@ const ExploreHeader = () => {
       scrollRef.current?.scrollTo({ x: pageX - 16, y: 0, animated: true });
     });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onCategoryChanged(categories[index].name);
   };
   return (
     <View className="flex-1 bg-primary">
@@ -66,7 +70,7 @@ const ExploreHeader = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
             alignItems: "center",
-            gap: 20,
+            gap: 30,
             paddingHorizontal: 16,
           }}
         >

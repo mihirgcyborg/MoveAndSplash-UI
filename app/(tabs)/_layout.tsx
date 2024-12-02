@@ -6,7 +6,7 @@ import { LogInSignUpContent } from "../../components/auth/LogInSignUpContent";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Platform } from "react-native";
 
 const TabsLayout = () => {
   const { openBottomSheet } = useBottomSheet();
@@ -111,7 +111,12 @@ const TabsLayout = () => {
         />
       </Tabs>
 
-      <StatusBar backgroundColor="#161622" style="auto" />
+      <StatusBar
+        translucent={Platform.OS === "android"}
+        hideTransitionAnimation="fade"
+        backgroundColor="#FFFFFF"
+        style="auto"
+      />
     </SafeAreaView>
   );
 };
