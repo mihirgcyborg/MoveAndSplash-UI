@@ -5,6 +5,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Alert,
+  Button,
 } from "react-native";
 import React, { useState } from "react";
 import { SignupFormConfig } from "../../config/formConfig";
@@ -12,13 +14,45 @@ import { useForm } from "../../hooks/useForm";
 import InputFields from "../helper/InputFields";
 import { ScrollView } from "react-native-gesture-handler";
 import CustomButton from "../helper/CustomButton";
+import { defaultValuesProps } from "../../interfaces/commonTypes";
+import { registerUser } from "../../services/authService";
+import { useBottomSheet } from "../helper/BottomSheetProvider";
+import { router } from "expo-router";
 
-const SignupForm = () => {
+interface SignupFormProps {
+  defaultValues: defaultValuesProps;
+}
+const SignupForm: React.FC<SignupFormProps> = ({ defaultValues }) => {
   const configForm = SignupFormConfig;
+  const { closeBottomSheet } = useBottomSheet();
   const { formData, handleInputChange, togglePasswordVisibility, errors } =
-    useForm(SignupFormConfig);
+    useForm(SignupFormConfig, defaultValues);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+    try {
+      const registerUserRequest = {
+        firstName: formData["firstName"],
+        lastName: formData["lastName"],
+        email: formData["email"],
+        password: formData["password"],
+        dateOfBirth: formData["dateOfBirth"],
+      };
+      const user = await registerUser(registerUserRequest);
+      console.log("User registered successfully:", user);
+      Alert.alert("Account Created", "Welcome to Move&Splash");
+      closeBottomSheet();
+      router.navigate("(tabs)/explore");
+      // Navigate or show success message
+    } catch (error: any) {
+      console.error(error.message);
+      Alert.alert("Error Occured", error.message);
+      // Show error message to the user
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -80,7 +114,8 @@ const SignupForm = () => {
           <CustomButton
             title="Agree and continue"
             containerStyles="bg-black-100"
-            handlePress={() => {}}
+            handlePress={handleSubmit}
+            isLoading={isSubmitting}
           />
         </View>
       </ScrollView>

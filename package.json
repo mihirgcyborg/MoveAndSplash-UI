@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5.0.5",
+    "axios": "^1.7.9",
     "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.10",

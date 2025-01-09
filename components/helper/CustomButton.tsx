@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -28,9 +28,13 @@ const CustomButton = ({
           isLoading ? "opacity-50" : ""
         }`}
       >
-        <Text className={`text-primary font-psemibold text-lg ${textStyles}`}>
-          {title}
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#ffffff" />
+        ) : (
+          <Text className={`text-primary font-psemibold text-lg ${textStyles}`}>
+            {title}
+          </Text>
+        )}
       </View>
     </TouchableOpacity>
   );

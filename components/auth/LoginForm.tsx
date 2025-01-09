@@ -1,4 +1,4 @@
-import { View, Text, LayoutAnimation } from "react-native";
+import { View, Text, LayoutAnimation, Alert } from "react-native";
 import React, { useState } from "react";
 import {
   LoginFormConfig,
@@ -10,8 +10,10 @@ import { useBottomSheet } from "../helper/BottomSheetProvider";
 import SignupForm from "./SignupForm";
 import { useForm } from "../../hooks/useForm";
 import InputFields from "../helper/InputFields";
+import { checkUserExists, loginUser } from "../../services/authService";
+import { router } from "expo-router";
 const LoginForm = () => {
-  const { openBottomSheet } = useBottomSheet();
+  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const [enableSignUp, setEnableSignUp] = useState(false);
   const configForm = enableSignUp ? SignupFormInitialConfig : LoginFormConfig;
   const {
@@ -22,9 +24,9 @@ const LoginForm = () => {
     errors,
     setErrors,
     validateAllFields,
-  } = useForm(configForm);
+  } = useForm(configForm, null);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const isValid = validateAllFields();
 
     if (!isValid) {
@@ -32,13 +34,14 @@ const LoginForm = () => {
       return;
     } else {
       if (enableSignUp) {
-        // const emailExists = await checkEmailExists(formData["email"]);
-        const emailExists = false;
+        const emailExists = await checkUserExists(formData["email"]);
+        // const emailExists = false;
         if (!emailExists) {
           // Redirect to the signup completion page
           console.log("Redirecting to signup page for", formData["email"]);
+          const defaultValues = { email: formData["email"] };
           openBottomSheet(
-            <SignupForm />,
+            <SignupForm defaultValues={defaultValues} />,
             "Finish signing up",
             false,
             ["91"],
@@ -49,6 +52,20 @@ const LoginForm = () => {
         }
       } else {
         // Submit login form
+        try {
+          const loginUserRequest = {
+            email: formData["email"],
+            password: formData["password"],
+          };
+          const loggedInUser = await loginUser(loginUserRequest);
+          Alert.alert("Sucessful login", "Welcome to Move&Splash");
+          closeBottomSheet();
+          router.navigate("(tabs)/explore");
+        } catch (error: any) {
+          console.error(error.message);
+          Alert.alert("Error Occured", error.message);
+        }
+
         console.log("Form submitted:", formData);
       }
     }

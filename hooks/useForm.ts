@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { FormConfigProps } from "../config/formConfig";
+import { defaultValuesProps } from "../interfaces/commonTypes";
 
 
-export const useForm = (config: Record<string, FormConfigProps>) => {
+export const useForm = (config :Record<string, FormConfigProps> , defaultValues:defaultValuesProps | null) => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
 
@@ -10,14 +11,14 @@ export const useForm = (config: Record<string, FormConfigProps>) => {
     setFormData(
       Object.keys(config).reduce((allfields, currData) => {
         let newFields = Object.keys(config[currData].inputFields).reduce(
-          (acc, key) => ({ ...acc, [key]: "" }),
+          (acc, key) => ({ ...acc, [key]: (defaultValues?.[key] as string) || "" }),
           {}
         );
         return { ...allfields, ...newFields };
       }, {})
     );
     setErrors({});
-  }, [config]);
+  }, [config,defaultValues]);
   const validateField = (
     sectionKey: string,
     fieldKey: string,
